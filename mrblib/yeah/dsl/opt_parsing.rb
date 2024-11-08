@@ -20,24 +20,35 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-module Shelf
-  module Handler
-    class SimpleHttpServer
-      # Create an instance of SimpleHttpServer by passing the specified options
-      # and runs the server.
-      def self.run(app, options = {})
-        host = options[:host] || 'localhost' if ENV['SHELF_ENV'] != 'production'
-        host = nil if host == '0.0.0.0'
-        opts = { host: host, port: 8080, app: app }.merge(options)
-
-        server = ::SimpleHttpServer.new(opts)
-
-        yield server if block_given?
-
-        server.run
+module Yeah::DSL
+  # DSL methods related to command-line parsing.
+  module OptParsing
+    # Add a flag and a callback to invoke if flag is given later.
+    #
+    # @param [ String ] flag The name of the option value.
+    #                        Possible values: object, string, int, float, bool
+    # @param [ Symbol ] type The type of the option v
+    # @param [ Object ] dval The value to use if nothing else given.
+    # @param [ Proc ]   blk  The callback to be invoked.
+    #
+    # @return [ Void ]
+    def opt(opt, type = :object, dval = nil, &blk)
+      if dval.nil? && !type.is_a?(Symbol)
+        Yeah.application.opts.parser.on(opt, :object, type, &blk)
+      else
+        Yeah.application.opts.parser.on(opt, type, dval, &blk)
       end
     end
 
-#    register 'simplehttpserver', SimpleHttpServer
+    # Same as `Yeah#opt` however is does exit after the block has been called.
+    #
+    # @return [ Void ]
+    def opt!(opt, type = :object, dval = nil, &blk)
+      if dval.nil? && !type.is_a?(Symbol)
+        Yeah.application.opts.parser.on!(opt, :object, type, &blk)
+      else
+        Yeah.application.opts.parser.on!(opt, type, dval, &blk)
+      end
+    end
   end
 end

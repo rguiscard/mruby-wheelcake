@@ -1,6 +1,5 @@
 # MIT License
 #
-# Copyright (c) rguiscard 2024
 # Copyright (c) Sebastian Katzer 2017
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,23 +20,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-MRuby::Gem::Specification.new('mruby-wheelcake') do |spec|
-  spec.license = 'MIT'
-  spec.authors = 'rguiscard '
-  spec.summary = 'Embedded web framework based on mruby-shelf and mruby-yeah'
+module Yeah
+  class << self
+    # Getter for the default Yeah app.
+    #
+    # @return [ Yeah::Application ]
+    def application
+      @application ||= Application.new
+    end
 
-  spec.add_dependency 'mruby-r3',  mgem: 'mruby-r3'
-  spec.add_dependency 'mruby-env', mgem: 'mruby-env'
+    # Setter for the default Yeah app
+    #
+    # @return [ Void ]
+    attr_writer :application
+  end
+end
 
-  spec.add_dependency 'mruby-object-ext',      core: 'mruby-object-ext'
-  spec.add_dependency 'mruby-exit',            core: 'mruby-exit'
-#  spec.add_dependency 'mruby-heeler',          mgem: 'mruby-heeler'
-  spec.add_dependency 'mruby-tiny-opt-parser', mgem: 'mruby-tiny-opt-parser'
-
-  spec.add_test_dependency 'mruby-sprintf', core: 'mruby-sprintf'
-  spec.add_test_dependency 'mruby-print',   core: 'mruby-print'
-  spec.add_test_dependency 'mruby-time',    core: 'mruby-time'
-  spec.add_test_dependency 'mruby-io',      core: 'mruby-io'
-
-  spec.rbfiles = Dir.glob("#{spec.dir}/mrblib/**/*.rb").sort.reverse
+# Default entry point to mruby-cli generated apps to run Yeah!
+#
+# @param [ Array<String> ] args ARGV
+#
+# @return [ Void ]
+def __main__(args)
+  Yeah.application.run! args[1..-1]
 end
