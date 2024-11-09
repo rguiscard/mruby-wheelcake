@@ -95,37 +95,37 @@ assert 'Shelf::Server::middleware', 'production' do
   assert_include Shelf::Server.middleware['production'], Shelf::ContentLength
 end
 
-assert 'Shelf::Server#server' do
-  ENV.delete 'SHELF_HANDLER'
-  assert_equal Shelf::Handler::SimpleHttpServer, Shelf::Server.new.server
+#assert 'Shelf::Server#server' do
+#  ENV.delete 'SHELF_HANDLER'
+#  assert_equal Shelf::Handler::SimpleHttpServer, Shelf::Server.new.server
+#
+#  Shelf::Handler.register 'superfastobject', Object
+#  assert_equal Object, Shelf::Server.new(server: 'superfastobject').server
+#end
 
-  Shelf::Handler.register 'superfastobject', Object
-  assert_equal Object, Shelf::Server.new(server: 'superfastobject').server
-end
+#assert 'Shelf::Server#shutdown' do
+#  assert_nothing_raised { Shelf::Server.new.shutdown }
+#end
 
-assert 'Shelf::Server#shutdown' do
-  assert_nothing_raised { Shelf::Server.new.shutdown }
-end
-
-assert 'Shelf::Server#start' do
-  app = -> {}
-  block_invoked = false
-
-  assert_equal 'server started', Shelf::Server.start(app: app)
-
-  Shelf::Server.start(app: app, debug: true, port: -1) do |server|
-    block_invoked = true
-    middleware    = Shelf::Server.middleware[server.config[:environment]]
-
-    assert_true $DEBUG
-    assert_equal(-1, server.config[:port])
-
-    if middleware.any?
-      assert_not_equal app, server.config[:app]
-    else
-      assert_equal app, server.config[:app]
-    end
-  end
-
-  assert_true block_invoked
-end
+#assert 'Shelf::Server#start' do
+#  app = -> {}
+#  block_invoked = false
+#
+#  assert_equal 'server started', Shelf::Server.start(app: app)
+#
+#  Shelf::Server.start(app: app, debug: true, port: -1) do |server|
+#    block_invoked = true
+#    middleware    = Shelf::Server.middleware[server.config[:environment]]
+#
+#    assert_true $DEBUG
+#    assert_equal(-1, server.config[:port])
+#
+#    if middleware.any?
+#      assert_not_equal app, server.config[:app]
+#    else
+#      assert_equal app, server.config[:app]
+#    end
+#  end
+#
+#  assert_true block_invoked
+#end

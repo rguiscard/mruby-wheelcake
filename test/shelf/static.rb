@@ -22,7 +22,7 @@
 
 Object.include Shelf
 
-ROOT = File.dirname(File.dirname(__FILE__))
+ROOT = File.dirname(File.dirname(File.dirname(__FILE__)))
 
 def build_app(opts)
   Shelf::Builder.app do
@@ -59,8 +59,8 @@ end
 
 assert 'Static', 'url' do
   app  = build_app({ urls: ['/test'] })
-  body = app.call(env_for('/test/static.rb'))[2]
-  file = read_file('test', File.basename(__FILE__))
+  body = app.call(env_for('/test/shelf/static.rb'))[2]
+  file = read_file('test', 'shelf', File.basename(__FILE__))
 
   assert_equal file, body.join
 end

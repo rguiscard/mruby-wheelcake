@@ -31,8 +31,9 @@ class Logger
 end
 
 assert 'Shelf::Logger' do
-  log = Logger.new
+  log = nil
   app = Shelf::Builder.app do
+    log = ::Logger.new(app)
     use Shelf::CommonLogger, log
     run ->(env) { [200, env, ['A barebones shelf app']] }
   end

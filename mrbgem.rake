@@ -38,6 +38,7 @@ MRuby::Gem::Specification.new('mruby-wheelcake') do |spec|
   spec.add_test_dependency 'mruby-print',   core: 'mruby-print'
   spec.add_test_dependency 'mruby-time',    core: 'mruby-time'
   spec.add_test_dependency 'mruby-io',      core: 'mruby-io'
+  spec.add_test_dependency 'mruby-logger',  mgem: 'mruby-logger'
 
   spec.rbfiles = Dir.glob("#{spec.dir}/mrblib/**/*.rb").sort.reverse
 end
