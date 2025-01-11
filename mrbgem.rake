@@ -30,6 +30,7 @@ MRuby::Gem::Specification.new('mruby-wheelcake') do |spec|
   spec.add_dependency 'mruby-env', mgem: 'mruby-env'
 
   spec.add_dependency 'mruby-object-ext',      core: 'mruby-object-ext'
+  spec.add_dependency 'mruby-string-ext',      core: 'mruby-string-ext'
   spec.add_dependency 'mruby-exit',            core: 'mruby-exit'
 #  spec.add_dependency 'mruby-heeler',          mgem: 'mruby-heeler'
   spec.add_dependency 'mruby-tiny-opt-parser', mgem: 'mruby-tiny-opt-parser'

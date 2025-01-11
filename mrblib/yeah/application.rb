@@ -25,7 +25,6 @@ module Yeah
   # booting process.
   class Application
     # To use Yeah.application.enable a.s.o.
-#    include ::Yeah::DSL::Configurable
     include DSL::Configurable
 
     # The instance of the server which is wraped by a (custom) handler.
